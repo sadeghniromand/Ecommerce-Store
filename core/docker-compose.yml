@@ -1,0 +1,15 @@
+version: '3.1'
+volumes:
+  ESDb:
+services:
+  database:
+    image: "postgres:14"
+    ports:
+    - 5425:5432
+    environment:
+      POSTGRES_USER: Es_user
+      POSTGRES_PASSWORD: es1234
+      POSTGRES_DB: es_db
+      PGDATA: /data_db
+      volumes:
+        -ESDb:/data_db
