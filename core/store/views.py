@@ -1,21 +1,29 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+
 from . import models
 
 
 # Create your views here.
 
 
-def all_products(request):
-    products = models.Product.objects.all()
-    return render(request, 'store/home.html', {'products': products})
+class ProductListView(ListView):
+    model = models.Product
+    context_object_name = 'products'
+    template_name = 'store/home.html'
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(models.Product, slug=slug, in_stuck=True)
-    return render(request, 'store/products/detail.html', {'product': product})
+class ProductDetailView(DetailView):
+    queryset = models.Product.objects.filter(in_stock=True)
+    template_name = 'store/products/product_detail.html'
 
 
-def category_list(request, category_slug):
-    category = get_object_or_404(models.Category, slug=category_slug)
-    products = models.Product.objects.filter(category=category)
-    return render(request, 'store/products/category.html', {'category': category, 'products': products})
+class CategoryItemListView(ListView):
+    template_name = 'store/products/category_item.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        category = get_object_or_404(models.Category, slug=self.kwargs['category_slug'])
+        query = models.Product.objects.filter(category=category)
+        print(query)
+        return query
