@@ -8,13 +8,13 @@ from . import models
 
 
 class ProductListView(ListView):
-    model = models.Product
+    queryset = models.Product.products.all()
     context_object_name = 'products'
     template_name = 'store/home.html'
 
 
 class ProductDetailView(DetailView):
-    queryset = models.Product.objects.filter(in_stock=True)
+    queryset = models.Product.products.all()
     template_name = 'store/products/product_detail.html'
 
 
