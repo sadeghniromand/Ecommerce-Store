@@ -26,6 +26,3 @@ class Basket:
     def __len__(self):
         return len(self.basket)
 
-    def a(self):
-        print(self.basket)
-        return self.basket
