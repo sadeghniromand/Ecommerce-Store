@@ -25,5 +25,4 @@ class CategoryItemListView(ListView):
     def get_queryset(self):
         category = get_object_or_404(models.Category, slug=self.kwargs['category_slug'])
         query = models.Product.objects.filter(category=category)
-        print(query)
         return query
