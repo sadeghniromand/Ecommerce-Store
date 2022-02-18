@@ -28,6 +28,9 @@ class Basket:
             self.basket[str(product_id)]['qty'] = qty_item + self.basket[str(product_id)]['qty']
             self.session.modified = True
 
+    def get_total_price(self):
+        return sum(Decimal(item['price']) * item['qty'] for item in self.basket.values())
+
     def __iter__(self):
         """
         Collect the product_id in the session data to query the database
